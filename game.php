@@ -1,6 +1,6 @@
 <?php
 // DEBUG
-print_r($_REQUEST);
+// print_r($_REQUEST);
 // DEBUG
 
 if (!isset($_GET['name'])) {
@@ -12,8 +12,41 @@ if (isset($_POST['logout'])) {
     exit(header('location: index.php'));
 }
 
+$choices = ['rock', 'paper', 'scissors'];
+
+function random_choice($choices) {
+    return $choices[random_int(0, count($choices) - 1)];
+}
+
+function decide_winner($player_choice, $computer_choice) {
+    if ($player_choice === $computer_choice) {
+        return 'Tie';
+    }
+
+    $player_wins =
+        ($player_choice === 'rock' && $computer_choice === 'scissors') ||
+        ($player_choice === 'paper' && $computer_choice === 'rock') ||
+        ($player_choice === 'scissors' && $computer_choice === 'paper');
+
+    return $player_wins ? 'You Win' : 'You Lose';
+}
+
+function play_game($player_choice, $computer_choice) {
+    $result = decide_winner($player_choice, $computer_choice);
+    $human = ucfirst($player_choice);
+    $computer = ucfirst($computer_choice);
+
+    return "Human=$human Computer=$computer Result=$result";
+}
+
 $name = $_GET['name'];
+$player_choice = $_POST['human'] ?? null;
 $game_result = '';
+
+if (in_array($player_choice, $choices, true)) {
+    $computer_choice = random_choice($choices);
+    $game_result = play_game($player_choice, $computer_choice);
+}
 
 ?>
 
@@ -38,7 +71,7 @@ $game_result = '';
         <input type="submit" name="logout" value="logout">
     </form>
     <div style="background-color: #f5f5f5">
-        <p> <?= $game_result ?> </p>
+        <p><?= $game_result ?></p>
     </div>
 </body>
 </html>
