@@ -1,31 +1,27 @@
 <?php
-    // DEBUG
-    print_r($_REQUEST);
-    // DEBUG
+if (isset($_POST['cancel'])) {
+    exit(header('location: ./index.php'));
+}
 
-    if (isset($_POST['cancel'])) {
-        exit(header('location: ./index.php'));
+$salt = 'XyZzy12*_';
+$stored_hash = 'a8609e8d62c043243c4e201cbb342862'; // Pw is meow123
+$is_error = false;
+$error_mesage = '';
+
+if (isset($_POST['name']) && isset($_POST['password'])) {
+    $name = $_POST['name'];
+    $password = $_POST['password'];
+
+    if (name === '' || $password === '') {
+        $is_error = true;
+        $error_mesage = "User name and password are required";
+    } else if (hash('md5', $salt.$password) !== $stored_hash) {
+        $is_error = true;
+        $error_mesage = "Incorrect password";
+    } else {
+        exit(header('location: ./game.php?name='.urlencode(name)));
     }
-
-    $salt = 'XyZzy12*_';
-    $stored_hash = 'a8609e8d62c043243c4e201cbb342862'; // Pw is meow123
-    $correct_username = '';
-    $correct_password = '';
-    $is_error = false;
-    $error_mesage = '';
-
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        if ($username === '' || $password === '') {
-            $is_error = true;
-            $error_mesage = "User name and password are required";
-        } else if (hash('md5', $salt.$password) !== $stored_hash) {
-            $is_error = true;
-            $error_mesage = "Incorrect password";
-        }
-    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +29,13 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>R . P . S</title>
 </head>
 <body>
     <?= "<p style='color: red;'>$error_mesage</p>" ?>
     <form method="post">
-        <label for="username">
-            username <input type="text" name="username">
+        <label for="name">
+            name <input type="text" name="name">
         </label>
         <br>
         <label for="password">
