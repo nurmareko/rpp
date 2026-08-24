@@ -1,3 +1,13 @@
+<?php
+    // DEBUG
+    print_r($_REQUEST);
+    // DEBUG
+
+    if (isset($_POST['cancel'])) {
+        header('location: ./index.php');
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +27,7 @@
         </label>
         <br>
         <input type="submit" value="try me">
-        <input type="submit" value="forget it">
+        <input type="submit" name="cancel" value="forget it">
     </form>
 </body>
 </html>
