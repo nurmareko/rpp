@@ -8,6 +8,6 @@
 <body>
     <h1>Welcome brotha, time to play rock paper scissors</h1>
     <p>rock paper and wut?</p>
-    <a href="./login.php">login here</a>
+    <a href="./login.php">login yo</a>
 </body>
 </html>
