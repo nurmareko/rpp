@@ -5,6 +5,7 @@
 
     if (isset($_POST['cancel'])) {
         header('location: ./index.php');
+        exit();
     }
 ?>
 
