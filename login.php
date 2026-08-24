@@ -4,8 +4,27 @@
     // DEBUG
 
     if (isset($_POST['cancel'])) {
-        header('location: ./index.php');
-        exit();
+        exit(header('location: ./index.php'));
+    }
+
+    $salt = 'XyZzy12*_';
+    $stored_hash = 'a8609e8d62c043243c4e201cbb342862';
+    $correct_username = '';
+    $correct_password = '';
+    $is_error = false;
+    $error_mesage = '';
+
+    if (isset($_POST['username']) && isset($_POST['password'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if ($username === '' || $password === '') {
+            $is_error = true;
+            $error_mesage = "User name and password are required";
+        } else if ($password !== "x") {
+            $is_error = true;
+            $error_mesage = "Incorrect password";
+        }
     }
 ?>
 
@@ -17,7 +36,7 @@
 	<title>Document</title>
 </head>
 <body>
-    <p>you know it</p>
+    <?= "<p style='color: red;'>$error_mesage</p>" ?>
     <form method="post">
         <label for="username">
             username <input type="text" name="username">
