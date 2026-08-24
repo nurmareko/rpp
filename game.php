@@ -39,6 +39,18 @@ function play_game($player_choice, $computer_choice) {
     return "Human=$human Computer=$computer Result=$result";
 }
 
+function test_game($choices) {
+    $results = [];
+
+    foreach ($choices as $computer_choice) {
+        foreach ($choices as $player_choice) {
+            $results[] = play_game($player_choice, $computer_choice);
+        }
+    }
+
+    return implode("\n", $results);
+}
+
 $name = $_GET['name'];
 $player_choice = $_POST['human'] ?? null;
 $game_result = '';
@@ -46,6 +58,8 @@ $game_result = '';
 if (in_array($player_choice, $choices, true)) {
     $computer_choice = random_choice($choices);
     $game_result = play_game($player_choice, $computer_choice);
+} elseif ($player_choice === 'test') {
+    $game_result = test_game($choices);
 }
 
 ?>
@@ -66,12 +80,13 @@ if (in_array($player_choice, $choices, true)) {
             <option value="rock">rock</option>
             <option value="paper">paper</option>
             <option value="scissors">scissors</option>
+            <option value="test">test</option>
         </select>
         <input type="submit" value="play">
         <input type="submit" name="logout" value="logout">
     </form>
     <div style="background-color: #f5f5f5">
-        <p><?= $game_result ?></p>
+        <pre><?= $game_result ?></pre>
     </div>
 </body>
 </html>
