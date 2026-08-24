@@ -8,7 +8,7 @@
     }
 
     $salt = 'XyZzy12*_';
-    $stored_hash = 'a8609e8d62c043243c4e201cbb342862';
+    $stored_hash = 'a8609e8d62c043243c4e201cbb342862'; // Pw is meow123
     $correct_username = '';
     $correct_password = '';
     $is_error = false;
@@ -21,7 +21,7 @@
         if ($username === '' || $password === '') {
             $is_error = true;
             $error_mesage = "User name and password are required";
-        } else if ($password !== "x") {
+        } else if (hash('md5', $salt.$password) !== $stored_hash) {
             $is_error = true;
             $error_mesage = "Incorrect password";
         }
